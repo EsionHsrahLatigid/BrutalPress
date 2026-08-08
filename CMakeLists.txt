@@ -115,6 +115,23 @@ if(BRUTALPRESS_BUILD_PLUGIN)
         "${CMAKE_CURRENT_LIST_DIR}/include"
         "${CMAKE_CURRENT_LIST_DIR}/source")
 
+    set(brutalpress_release_bundle_targets
+        brutalpress_standalone_plugin
+        brutalpress_vst3_plugin)
+    if(APPLE)
+        list(APPEND brutalpress_release_bundle_targets brutalpress_au_plugin)
+    endif()
+
+    add_custom_target(brutalpress_release_bundles
+        DEPENDS ${brutalpress_release_bundle_targets})
+
+    if(APPLE)
+        set_target_properties(brutalpress_standalone_plugin PROPERTIES
+            MACOSX_BUNDLE_GUI_IDENTIFIER "audio.2bit.brutalpress"
+            MACOSX_BUNDLE_BUNDLE_NAME "BrutalPress"
+            XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "audio.2bit.brutalpress")
+    endif()
+
     if(APPLE AND BRUTALPRESS_ADHOC_SIGN)
         find_program(BRUTALPRESS_CODESIGN_EXECUTABLE codesign REQUIRED)
         add_custom_command(TARGET brutalpress_vst3_plugin POST_BUILD

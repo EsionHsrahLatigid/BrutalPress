@@ -55,12 +55,13 @@ Release app and plugins:
 
 ```sh
 cmake --preset plugin-release
-cmake --build --preset plugin-release --parallel
+cmake --build --preset plugin-release --parallel --target brutalpress_release_bundles brutalpress_engine_tests
 ctest --preset plugin-release
 ```
 
 Artifacts:
 
+- `brutalpress_release_bundles`
 - `build/plugin-release/brutalpress_standalone_plugin.app`
 - `build/plugin-release/VST3/Release/brutalpress_vst3_plugin.vst3`
 - `build/plugin-release/brutalpress_au_plugin.component`
@@ -69,7 +70,16 @@ On Windows, CI packages the generated standalone `.exe` and VST3 bundle as `Brut
 
 ## Continuous integration and releases
 
-GitHub Actions tests and packages macOS 26 arm64 and Windows 2025 x64 builds. Main-branch and pull-request runs publish `latest` ZIP artifacts; a `v*` tag creates or updates one GitHub Release containing versioned ZIPs for both platforms.
+`.github/workflows/ci.yml` is the required CI entrypoint for pushes to `main`, pull requests, and manual runs. A lightweight Linux classifier always runs. Changes limited to `README.md`, `DESIGN.md`, `LICENSE`, `docs/**`, or `.github/ISSUE_TEMPLATE/**` skip the heavy jobs; every other change runs Debug tests and Release bundle builds on macOS 26 arm64 and Windows 2025 x64. Manual dispatches default to forcing both heavy jobs.
+
+Successful heavy runs upload two immutable, 14-day artifacts, each containing a platform ZIP plus a strict single-line SHA-256 manifest:
+
+- `BrutalPress-latest-macos-arm64`, containing `BrutalPress-latest-macos-arm64.zip` and `SHA256SUMS.txt`
+- `BrutalPress-latest-windows-x64`, containing `BrutalPress-latest-windows-x64.zip` and `SHA256SUMS.txt`
+
+`.github/workflows/release.yml` is the only `v*` tag workflow. It performs no compilation. The Ubuntu release job resolves lightweight or annotated tags to a commit, requires the tag version to match the CMake project version, requires one successful `CI` push run on `main` for that exact SHA, downloads exactly the two expected unexpired artifacts by ID, verifies their SHA-256 manifests and ZIP integrity, then publishes versioned assets such as `BrutalPress-0.1.1-macos-arm64.zip` and `BrutalPress-0.1.1-windows-x64.zip`. Publication uses a draft release whose asset list is sanitized and rechecked to contain exactly those two ZIPs. A missing, expired, ambiguous, or mismatched provenance chain fails closed.
+
+Release operator sequence: merge or push the version commit to `main`, wait for both platform jobs and `CI Summary` to pass, then create and push the version tag. Never move or reuse a published tag; correct the source and use the next patch version instead.
 
 The local macOS build ad-hoc signs the standalone app and VST3 bundle. Distribution still requires a Developer ID signing and notarization workflow.
 
