@@ -86,7 +86,7 @@ if(BRUTALPRESS_BUILD_PLUGIN)
         PLUGIN_EMAIL ""
         PLUGIN_VERSION "${PROJECT_VERSION}"
         PLUGIN_DESCRIPTION "Extreme three-band upward and downward compressor"
-        PLUGIN_URL "https://github.com/2bbb/BrutalPress"
+        PLUGIN_URL "https://github.com/EsionHsrahLatigid/BrutalPress"
         PLUGIN_IS_SYNTH OFF
         PLUGIN_IS_MONO OFF
         PLUGIN_CREATE_CLAP OFF
