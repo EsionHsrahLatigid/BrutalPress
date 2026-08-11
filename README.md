@@ -6,8 +6,8 @@ The current project builds a Standalone app, VST3 bundle, and Audio Unit v2 effe
 
 | Field | Value |
 | --- | --- |
-| App ID | `audio.2bit.brutalpress` |
-| Plugin ID | `audio.2bit.BrutalPress` |
+| App ID | `jp.ehl.brutalpress` |
+| Plugin ID | `jp.ehl.brutalpress` |
 | AU subtype | `BrPr` |
 | AU type | `aufx` effect |
 | Channels | stereo input, stereo output |
