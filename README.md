@@ -62,9 +62,11 @@ ctest --preset plugin-release
 Artifacts:
 
 - `brutalpress_release_bundles`
-- `build/plugin-release/brutalpress_standalone_plugin.app`
-- `build/plugin-release/VST3/Release/brutalpress_vst3_plugin.vst3`
-- `build/plugin-release/brutalpress_au_plugin.component`
+- `artifacts/plugin-release/macos-arm64/standalone/brutalpress_standalone_plugin.app`
+- `artifacts/plugin-release/macos-arm64/vst3/brutalpress_vst3_plugin.vst3`
+- `artifacts/plugin-release/macos-arm64/au/brutalpress_au_plugin.component`
+
+`build/` is CMake's internal workspace. Human-facing products are always staged under `artifacts/plugin-release/<platform-arch>/`; Windows uses `windows-x64` with `standalone/` and `vst3/`.
 
 On Windows, CI packages the generated standalone `.exe` and VST3 bundle as `BrutalPress-latest-windows-x64.zip`.
 
