@@ -43,6 +43,12 @@ YUP is pinned to commit `9a1c9bc699b6a714f6f52486462d98a140c8bf95` when the adja
 
 ## Build and test
 
+Clone with `--recurse-submodules`, or initialize the shared [yup-ehl-design-module](https://github.com/EsionHsrahLatigid/yup-ehl-design-module) before configuring:
+
+```sh
+git submodule update --init
+```
+
 Fast DSP-only loop:
 
 ```sh

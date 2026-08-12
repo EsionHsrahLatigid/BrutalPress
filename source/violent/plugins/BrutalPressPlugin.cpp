@@ -251,7 +251,7 @@ yup::AudioProcessorEditor* BrutalPressPlugin::createEditor()
     return new ParameterGridEditor (*this,
                                     "BrutalPress",
                                     "Hearing risk: this processor can create extreme average level. Keep monitoring low.",
-                                    0xffff3b30u);
+                                    0xfff2f2f0u);
 }
 
 void BrutalPressPlugin::syncParameterValuesFromParameters() noexcept
