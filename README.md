@@ -72,7 +72,7 @@ Artifacts:
 - `artifacts/plugin-release/macos-arm64/vst3/brutalpress_vst3_plugin.vst3`
 - `artifacts/plugin-release/macos-arm64/au/brutalpress_au_plugin.component`
 
-`build/` is CMake's internal workspace. Human-facing products are always staged under `artifacts/plugin-release/<platform-arch>/`; Windows uses `windows-x64` with `standalone/` and `vst3/`.
+`build/` is CMake's internal workspace. Human-facing products are always staged under `artifacts/plugin-release/<platform-arch>/`; Windows uses `windows-x64` with `standalone/` and `vst3/`. On local macOS non-CI `plugin-release` builds, the staged VST3 and AU bundles are also physically copied to `~/Library/Audio/Plug-Ins/VST3` and `~/Library/Audio/Plug-Ins/Components`; Standalone stays in `artifacts/`. Configure with `-DEHL_COPY_PLUGIN_AFTER_BUILD=OFF` to disable the local plugin copy.
 
 On Windows, CI packages the generated standalone `.exe` and VST3 bundle as `BrutalPress-latest-windows-x64.zip`.
 
